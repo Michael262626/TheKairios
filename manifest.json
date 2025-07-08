@@ -1,0 +1,48 @@
+{
+    "manifest_version": 3,
+    "name": "Kairios - Smart Timing Assistant",
+    "version": "2.4",
+    "description": "AI-powered timing assistant for optimal posting with customizable insights.",
+    "permissions": [
+      "tabs",
+      "storage",
+      "alarms",
+      "activeTab",
+      "notifications"
+    ],
+    "host_permissions": [
+      "*://*.twitter.com/*",
+      "*://*.x.com/*",
+      "*://*.mail.google.com/*",
+      "*://*.gmail.com/*",
+      "*://*.shopify.com/*",
+      "*://*.youtube.com/*",
+      "*://*.medium.com/*"
+    ],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "*://*.twitter.com/*",
+          "*://*.x.com/*",
+          "*://*.mail.google.com/*",
+          "*://*.gmail.com/*",
+          "*://*.shopify.com/*",
+          "*://*.youtube.com/*",
+          "*://*.medium.com/*"
+        ],
+        "js": ["content.js"],
+        "css": ["content.css"]
+      }
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "icons": {
+      "16": "/images/icon16.png",
+      "48": "/images/icon16.png",
+      "128": "/images/icon16.png"
+    }
+  }

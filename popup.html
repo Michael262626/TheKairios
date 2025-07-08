@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Kairios - Smart Timing Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            width: 350px;
+            height: 650px;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+        }
+        header {
+            text-align: center;
+            padding: 16px;
+            border-bottom: 1px solid #334155;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #22d3ee, #0ea5e9);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
+        }
+        .extension-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #22d3ee;
+        }
+        .tagline {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .status {
+            padding: 16px;
+            text-align: center;
+        }
+        .status-active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #22c55e;
+        }
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        .chrono-dial {
+            width: 128px;
+            height: 128px;
+            margin: 16px auto;
+            position: relative;
+            border: 2px solid #334155;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #0f172a, #1e293b);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .chrono-dial:hover {
+            transform: scale(1.05);
+        }
+        .chrono-dial.refreshing {
+            animation: spin 1s linear;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .dial-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: #22d3ee;
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
+        }
+        .time-zone {
+            position: absolute;
+            border-radius: 50%;
+        }
+        .optimal-zone {
+            width: 32px;
+            height: 32px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.6), rgba(34, 211, 238, 0.1));
+            top: 12px;
+            right: 16px;
+        }
+        .neutral-zone {
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle, rgba(250, 204, 21, 0.4), rgba(250, 204, 21, 0.1));
+            bottom: 16px;
+            left: 12px;
+        }
+        .dead-zone {
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.1));
+            top: 24px;
+            left: 12px;
+        }
+        .insight-box {
+            margin: 16px;
+            padding: 12px;
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            border-radius: 8px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .insight-box.highlight {
+            background: rgba(34, 211, 238, 0.3);
+            transform: scale(1.02);
+        }
+        .primary-insight {
+            font-size: 14px;
+            font-weight: 600;
+            color: #22d3ee;
+            margin-bottom: 4px;
+        }
+        .secondary-insight, .platform-tip {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+        }
+        .btn-primary, .btn-secondary {
+            flex: 1;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #22d3ee, #0ea5e9);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(34, 211, 238, 0.4);
+        }
+        .btn-secondary {
+            background: #334155;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+        }
+        .btn-secondary:hover {
+            background: #475569;
+        }
+        .preferences {
+            margin: 16px;
+            padding: 12px;
+            background: rgba(51, 65, 85, 0.5);
+            border-radius: 8px;
+        }
+        .preferences h2 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #22d3ee;
+            margin-bottom: 8px;
+        }
+        .preferences label {
+            display: block;
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+        .preferences select, .preferences input[type="time"] {
+            width: 100%;
+            padding: 6px;
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .insight-history {
+            margin: 16px;
+            padding: 12px;
+            background: rgba(51, 65, 85, 0.5);
+            border-radius: 8px;
+        }
+        .insight-history summary {
+            font-size: 14px;
+            font-weight: 600;
+            color: #22d3ee;
+            cursor: pointer;
+        }
+        .insight-history ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+        .insight-history li {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+        .reset-btn {
+            display: block;
+            margin: 12px auto 0;
+            padding: 6px 12px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .reset-btn:hover {
+            background: #dc2626;
+        }
+        footer {
+            text-align: center;
+            padding: 12px;
+            border-top: 1px solid #334155;
+            font-size: 10px;
+            color: #64748b;
+        }
+        dialog {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        dialog h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #22d3ee;
+            margin-bottom: 12px;
+        }
+        dialog label {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        dialog input[type="time"] {
+            width: 100%;
+            padding: 6px;
+            background: #0f172a;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        dialog div {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header role="banner">
+        <div class="logo">
+            <div class="logo-icon" aria-hidden="true">K</div>
+            <div>
+                <h1 class="extension-name">Kairios</h1>
+                <p class="tagline">Smart Timing Assistant</p>
+            </div>
+        </div>
+    </header>
+
+    <section class="status" role="status">
+        <div id="status" class="status-active">
+            <span class="pulse" aria-hidden="true"></span>
+            <span>Ready to assist</span>
+        </div>
+    </section>
+
+    <section>
+        <div id="chrono-dial" class="chrono-dial" aria-label="Refresh timing insights" tabindex="0">
+            <div class="dial-center"></div>
+            <div class="time-zone optimal-zone"></div>
+            <div class="time-zone neutral-zone"></div>
+            <div class="time-zone dead-zone"></div>
+        </div>
+    </section>
+
+    <section id="insightBox" class="insight-box">
+        <p id="primaryInsight" class="primary-insight" aria-live="polite">Optimal Time: Loading...</p>
+        <p id="secondaryInsight" class="secondary-insight"></p>
+        <p id="platformTip" class="platform-tip"></p>
+    </section>
+
+    <section class="action-buttons">
+        <button id="actNow" class="btn-primary" aria-label="Copy timing insight to clipboard">Act Now</button>
+        <button id="scheduleBtn" class="btn-secondary" aria-label="Open schedule dialog">Schedule</button>
+    </section>
+
+    <section class="preferences">
+        <h2>Preferences</h2>
+        <div>
+            <label for="audience">Target Audience:</label>
+            <select id="audience">
+                <option value="tech">Tech & Crypto</option>
+                <option value="business">Business Professionals</option>
+                <option value="general">General Audience</option>
+            </select>
+        </div>
+        <div>
+            <label for="timezone">Time Zone:</label>
+            <select id="timezone">
+                <option value="UTC">UTC</option>
+                <option value="Africa/Lagos">Africa/Lagos (WAT)</option>
+                <option value="America/New_York">America/New York</option>
+                <option value="America/Los_Angeles">America/Los Angeles</option>
+                <option value="Europe/London">Europe/London</option>
+                <option value="Asia/Tokyo">Asia/Tokyo</option>
+            </select>
+        </div>
+        <button id="resetPreferences" class="reset-btn" aria-label="Reset preferences to default">Reset Preferences</button>
+    </section>
+
+    <section class="insight-history">
+        <details>
+            <summary>Recent Insights</summary>
+            <ul id="insightHistory"></ul>
+        </details>
+    </section>
+
+    <footer>
+        Kairios v2.4 - Powered by xAI
+    </footer>
+
+    <dialog id="scheduleDialog" role="dialog" aria-labelledby="scheduleDialogTitle">
+        <form method="dialog">
+            <h2 id="scheduleDialogTitle">Schedule Post</h2>
+            <label for="scheduleTime">Select Time:</label>
+            <input type="time" id="scheduleTime" required>
+            <div>
+                <button type="submit" class="btn-primary">Confirm</button>
+                <button type="button" class="btn-secondary" id="cancelSchedule">Cancel</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="popup.js"></script>
+</body>
+</html>

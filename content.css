@@ -1,0 +1,165 @@
+.kairios-k-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+  background: linear-gradient(45deg, #22d3ee, #0ea5e9);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.kairios-k-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(34, 211, 238, 0.4);
+}
+
+.kairios-panel {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #e2e8f0;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.kairios-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #334155;
+}
+
+.kairios-panel-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #22d3ee;
+}
+
+.kairios-panel-close {
+  background: none;
+  border: none;
+  color: #e2e8f0;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.kairios-chrono-dial {
+  width: 100px;
+  height: 100px;
+  margin: 15px auto;
+  position: relative;
+  border: 2px solid #334155;
+  border-radius: 50%;
+  background: radial-gradient(circle, #0f172a, #1e293b);
+}
+
+.kairios-dial-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: #22d3ee;
+  border-radius: 50%;
+}
+
+.kairios-time-zone {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.kairios-optimal-zone {
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.6), rgba(34, 211, 238, 0.1));
+  top: 10px;
+  right: 15px;
+}
+
+.kairios-neutral-zone {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, rgba(250, 204, 21, 0.4), rgba(250, 204, 21, 0.1));
+  bottom: 15px;
+  left: 10px;
+}
+
+.kairios-dead-zone {
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.1));
+  top: 20px;
+  left: 10px;
+}
+
+.kairios-insight-box {
+  padding: 10px;
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-radius: 6px;
+  margin: 10px;
+}
+
+.kairios-primary-insight {
+  font-size: 14px;
+  font-weight: 600;
+  color: #22d3ee;
+  margin-bottom: 5px;
+}
+
+.kairios-secondary-insight, .kairios-platform-tip {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.kairios-action-buttons {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.kairios-btn-primary, .kairios-btn-secondary {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.kairios-btn-primary {
+  background: linear-gradient(45deg, #22d3ee, #0ea5e9);
+  color: white;
+  border: none;
+}
+
+.kairios-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(34, 211, 238, 0.4);
+}
+
+.kairios-btn-secondary {
+  background: rgba(51, 65, 85, 0.8);
+  color: #e2e8f0;
+  border: 1px solid #334155;
+}
+
+.kairios-btn-secondary:hover {
+  background: rgba(51, 65, 85, 1);
+}
